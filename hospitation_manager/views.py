@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, 'hospitation_manager/layout.html')
+    return render(request, 'hospitation_manager/index.html')

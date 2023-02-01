@@ -1,0 +1,12 @@
+body {
+    min-height: 100vh;
+}
+
+main {
+    min-height: calc(100vh - 64px);
+}
+
+main>div.container {
+    margin-top: 10em;
+    flex-direction: column;
+}
