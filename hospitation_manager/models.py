@@ -2,7 +2,7 @@ from django.db import models
 
 class AcademicTeacher(models.Model):
     last_hospitation_date = models.DateField(verbose_name="last hospitation Date")
-    academic_title = models.TextField(verbose_name="lcademic Title")
+    academic_title = models.TextField(verbose_name="academic Title")
     specialization = models.TextField(verbose_name="specialization")
     first_name = models.TextField(verbose_name="first Name")
     last_name = models.TextField(verbose_name="last Name")
@@ -48,7 +48,7 @@ class Hospitation(models.Model):
         ('Z', 'Przeprowadzona'),
         ('O', 'Odwołana'),
         ('W', 'Oczekuje na przeprowadzenie')]
-    number = models.IntegerField(verbose_name="number")
+    number = models.BigAutoField(verbose_name="number", primary_key=True)
     hospitation_date = models.DateField(verbose_name="hospitation Date")
     created_at = models.DateField(verbose_name="date", auto_now=False, auto_now_add=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name="status", default='W')
