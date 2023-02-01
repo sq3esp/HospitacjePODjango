@@ -3,14 +3,42 @@
 
 {% block title %} <title>Menedżer hospitacji</title> {% endblock%}
 {% block styles %}
-<link rel="stylesheet" href="{% static 'hospitation_manager/styles/index.css' %}">
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper">
+        <h5>Odwołania od protokołów pohospitacyjnych</h5>
+    </div>
+    <div class="data-section-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Lp. </th>
+                    <th>Składający odwołanie</th>
+                    <th>Data wystawienia</th>
+                    <th>Status</th>
+                    <th class="center">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appeal in appeals %}
+                <tr>
+                    
+                        <td>{{ appeal.id }}</td>
+                        <td>{{ appeal.issuer }}</td>
+                        <td>{{ appeal.created_at }}</td>
+                        <td>{{ appeal.status }}</td>
+                        <td class="center" style="width: 200px"><a class="waves-effect waves-light btn blue" href="details/{{ appeal.id }}"><i class="material-icons right">create</i>Odpowiedz</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 <ol>
-    {% for appeal in appeals %}
-        <li><a href="details/{{ appeal.id }}">{{appeal}}</a></li>
-    {% endfor %}
 </ol>
 {% endblock %}
 
