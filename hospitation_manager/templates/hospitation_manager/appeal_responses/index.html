@@ -1,0 +1,17 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<ol>
+    {% for appeal in appeals %}
+        <li><a href="details/{{ appeal.id }}">{{appeal}}</a></li>
+    {% endfor %}
+</ol>
+{% endblock %}
+
+
