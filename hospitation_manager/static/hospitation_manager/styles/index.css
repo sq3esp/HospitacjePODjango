@@ -4,9 +4,18 @@ body {
 
 main {
     min-height: calc(100vh - 64px);
+
+}
+
+main * {
+    margin: 0;
 }
 
 main>div.container {
-    margin-top: 10em;
+    padding-top: 10em;
     flex-direction: column;
+}
+
+main>div.container h1 {
+    margin-bottom: 0.5em;
 }
