@@ -18,6 +18,11 @@ python manage.py migrate
 python manage.py collectstatic
 ```
 
+## Load data from fixtures
+```
+python manage.py loaddata hospitation_manager
+```
+
 ## Run application
 ```
 python manage.py runserver
