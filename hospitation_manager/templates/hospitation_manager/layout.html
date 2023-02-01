@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block title %} <title>Menedżer Hospitacji</title> {% endblock %}
+
+    <link rel="stylesheet" href="{% static 'hospitation_manager/styles/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'hospitation_manager/styles/layout.css' %}">
+    <link rel="shortcut icon" href="{% static 'hospitation_manager/favicon.ico' %}" type="image/x-icon">
+
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <nav class="top-nav grey darken-1">
+        {% block navigation %}
+        <div class="nav-wrapper grey darken-1">
+            <ul class="right hide-on-med-and-down">
+                <li><h5>Zalgowano jako: Dziekan</h5></li>
+            </ul>
+        </div>
+        {% endblock %}
+    </nav>
+    <ul id="slide-out" class="sidenav sidenav-fixed blue lighten-2 white-text ">
+        <div class="container logo-container">
+            <a href="#" class="brand-logo">
+                <img src="{% static 'hospitation_manager/favicon.ico' %}" alt="icon">
+            </a>
+        </div>
+        <div class="custom-container">
+            <a id="logo-text" href="#" class="brand-logo white-text flow-text center">Menedżer hospitacji</a>
+        </div>
+        {% block sidenav_links %}
+            <li><a href="#" class="white-text flow-text sidenav-link">test link 1</a></li>
+            <li><a href="#" class="white-text flow-text sidenav-link">test link 2</a></li>
+            <li><a href="#" class="white-text flow-text sidenav-link">test link 3</a></li>
+            <li><a href="#" class="white-text flow-text sidenav-link">test link 4</a></li>
+            <li><a href="#" class="white-text flow-text sidenav-link">test link 5</a></li>
+        {% endblock %}
+    </ul>
+  
+    <main>
+        {% block content %}
+            test
+        {% endblock %}
+    </main>
+
+    <script src="{% static 'hospitation_manager/scripts/materialize.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
