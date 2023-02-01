@@ -10,13 +10,15 @@ pip install -r requirements
 ```
 
 ## Apply migrations
-
-`python manage.py migrate`
-
+```
+python manage.py migrate
+```
 ## (only on deploy) collect static files
-
-`python manage.py collectstatic`
+```
+python manage.py collectstatic
+```
 
 ## Run application
-
-`python manage.py runserver`
+```
+python manage.py runserver
+```
