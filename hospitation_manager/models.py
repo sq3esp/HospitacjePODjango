@@ -48,7 +48,7 @@ class Hospitation(models.Model):
         ('Z', 'Przeprowadzona'),
         ('O', 'Odwołana'),
         ('W', 'Oczekuje na przeprowadzenie')]
-    number = models.IntegerField(verbose_name="number")
+    number = models.BigAutoField(verbose_name="number", primary_key=True)
     hospitation_date = models.DateField(verbose_name="hospitation Date")
     created_at = models.DateField(verbose_name="date", auto_now=False, auto_now_add=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name="status", default='W')
