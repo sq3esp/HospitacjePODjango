@@ -2,7 +2,7 @@ from django.db import models
 
 class AcademicTeacher(models.Model):
     last_hospitation_date = models.DateField(verbose_name="last hospitation Date")
-    academic_title = models.TextField(verbose_name="lcademic Title")
+    academic_title = models.TextField(verbose_name="academic Title")
     specialization = models.TextField(verbose_name="specialization")
     first_name = models.TextField(verbose_name="first Name")
     last_name = models.TextField(verbose_name="last Name")
