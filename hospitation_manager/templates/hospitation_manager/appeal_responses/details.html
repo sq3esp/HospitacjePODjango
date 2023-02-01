@@ -4,12 +4,44 @@
 {% block title %} <title>Menedżer hospitacji</title> {% endblock%}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="data-section-container">
     <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
         <h5>Odwołanie od protokołu pohospitacyjnego</h5>
+    </div>
+    <div class="data-section-body">
+        <div class="row">
+            <div class="row-container relation-container col s5">
+                <h6>Składający odwołanie: </h6>
+                <p>{{ appeal.issuer }}</p>
+                <a href="#" class="waves-effect waves-light btn blue disabled">Szczegóły</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container field-container col s5">
+                <h6>Data złożenia odwołania: </h6>
+                <p>{{ appeal.created_at }}</p>
+            </div>
+        </div>
+        <div class="row last">
+            <div class="row-container large-data-container col s12">
+                <h6>Powód odwołania: </h6>
+                <div class="large-text-field grey lighten-2">
+                    <p>{{ appeal.reason }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="action-button-container row">
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn blue" href="/appeal_responses/"><i class="material-icons right">arrow_back</i>Powrót</a>
+        </div>
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn blue" href="/appeal_responses/edit/{{appeal.id}}"><i class="material-icons right">create</i>Odpowiedz</a>
+        </div>
     </div>
 </div>
 {% endblock %}
