@@ -9,14 +9,14 @@
 
 {% block content %}
 <div class="data-section-container">
-    <div class="data-section-header white-text grey darken-3 valign-wrapper">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
         <h5>Odwołania od protokołów pohospitacyjnych</h5>
     </div>
     <div class="data-section-body">
         <table>
             <thead>
                 <tr>
-                    <th>Lp. </th>
+                    <th>Nr. </th>
                     <th>Składający odwołanie</th>
                     <th>Data wystawienia</th>
                     <th>Status</th>
@@ -26,12 +26,11 @@
             <tbody>
                 {% for appeal in appeals %}
                 <tr>
-                    
-                        <td>{{ appeal.id }}</td>
-                        <td>{{ appeal.issuer }}</td>
-                        <td>{{ appeal.created_at }}</td>
-                        <td>{{ appeal.status }}</td>
-                        <td class="center" style="width: 200px"><a class="waves-effect waves-light btn blue" href="details/{{ appeal.id }}"><i class="material-icons right">create</i>Odpowiedz</a></td>
+                    <td>{{ appeal.id }}</td>
+                    <td>{{ appeal.issuer }}</td>
+                    <td>{{ appeal.created_at }}</td>
+                    <td>{{ appeal.status }}</td>
+                    <td class="center" style="width: 200px"><a class="waves-effect waves-light btn blue" href="details/{{ appeal.id }}"><i class="material-icons right">create</i>Odpowiedz</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

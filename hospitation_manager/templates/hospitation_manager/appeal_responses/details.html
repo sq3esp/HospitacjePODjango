@@ -3,9 +3,14 @@
 
 {% block title %} <title>Menedżer hospitacji</title> {% endblock%}
 {% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>{{appeal}}</h1>
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Odwołanie od protokołu pohospitacyjnego</h5>
+    </div>
+</div>
 {% endblock %}
 
