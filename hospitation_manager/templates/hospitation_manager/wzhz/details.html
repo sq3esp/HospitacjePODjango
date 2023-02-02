@@ -1,0 +1,71 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Szczegóły nauczyciela</title> {% endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<div class="details-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Szczegóły nauczyciela</h5>
+    </div>
+    <div class="data-section-body">
+        <div class="row">
+            <div class="row-container large-data-container col s5">
+                <h6>Nauczyciel akademicki: </h6>
+                <p>{{ wzhz_member.academic_title }} {{ wzhz_member.first_name }} {{ wzhz_member.last_name }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container large-data-container col s5">
+                <h6>Specjalizacja: </h6> </br>
+                {%if wzhz_member.specialization == 'None' or wzhz_member.specialization == ""%}
+                <p>Brak</p>
+                {% else %}
+                <p>{{ wzhz_member.specialization }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container large-data-container col s5">
+                <h6>Data ostatniej hospitacji: </h6>
+                {% if wzhz_member.last_hospitation_date == 'None' or wzhz_member.last_hospitation_date == Null %}
+                <p>Nie przeprowadzano</p>
+                {% else %}
+                <p>{{ wzhz_member.last_hospitation_date }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% if wzhz_member.belongs_to_WZHZ == True %}
+        <div class="row">
+            <div class="row-container large-data-container col s5">
+                <h6>Czy należy do WZHZ: </h6>
+                <p>Tak</p>
+            </div>
+        </div>
+        <div class="row last">
+            <div class="row-container large-data-container col s12">
+                <h6>Data powołania do WZHZ: </h6>
+                <p>{{ wzhz_member.appointment_to_WZHZ_date }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row last">
+            <div class="row-container field-container col s5">
+                <h6>Czy należy do WZHZ: </h6>
+                <p>Nie</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="action-button-container row" style="margin-top:50px;">
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn blue" href="/wzhz/"><i class="material-icons right">arrow_back</i>Powrót</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
