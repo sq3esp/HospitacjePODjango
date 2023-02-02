@@ -5,7 +5,6 @@ from .models import ProtocolAppeal, AcademicTeacher
 
 import json
 
-
 def index(request):
     return render(request, 'hospitation_manager/index.html')
 
@@ -23,7 +22,6 @@ def appeal_responses_details(request, id):
     }
 
     return render(request, template, context)
-
 
 def appeal_responses_edit(request, id):
     if request.method == 'GET':
