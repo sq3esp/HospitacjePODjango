@@ -1,9 +1,9 @@
 from django.db import models
 
 class AcademicTeacher(models.Model):
-    last_hospitation_date = models.DateField(verbose_name="last hospitation Date")
-    academic_title = models.TextField(verbose_name="academic Title")
-    specialization = models.TextField(verbose_name="specialization")
+    last_hospitation_date = models.DateField(verbose_name="last hospitation Date", blank=True, null=True)
+    academic_title = models.TextField(verbose_name="academic Title", blank=True)
+    specialization = models.TextField(verbose_name="specialization", blank=True)
     first_name = models.TextField(verbose_name="first Name")
     last_name = models.TextField(verbose_name="last Name")
     belongs_to_WZHZ = models.BooleanField(verbose_name="belongs to WZHZ", default=False)
@@ -13,15 +13,15 @@ class AcademicTeacher(models.Model):
         return f"{self.academic_title} {self.first_name} {self.last_name}"
 
 class Classes(models.Model):
-    required_specialization = models.TextField(verbose_name="required Specialization")
+    required_specialization = models.TextField(verbose_name="required Specialization", blank=True)
     code = models.TextField(verbose_name="code")
     class_type = models.TextField(verbose_name="class Type")
     name = models.TextField(verbose_name="name")
     time_and_location = models.TextField(verbose_name="time and Location")
     ECTS = models.IntegerField(verbose_name="ECTS")
-    teaching_method = models.TextField(verbose_name="teaching Method")
-    study_program = models.TextField(verbose_name="study Program")
-    teacher = models.ForeignKey(AcademicTeacher, on_delete=models.CASCADE, verbose_name="teacher")
+    teaching_method = models.TextField(verbose_name="teaching Method", blank=True)
+    study_program = models.TextField(verbose_name="study Program", blank=True)
+    teacher = models.ForeignKey(AcademicTeacher, on_delete=models.SET_NULL, verbose_name="teacher", blank=True, null=True)
 
     def __str__(self) -> str:
         return f"{self.code} : {self.name}"
@@ -63,9 +63,10 @@ class Hospitation(models.Model):
     STATUS_CHOICES = [
         ('Z', 'Przeprowadzona'),
         ('O', 'Odwołana'),
+        ('P', 'Planowana'),
         ('W', 'Oczekuje na przeprowadzenie')]
     number = models.BigAutoField(verbose_name="number", primary_key=True)
-    hospitation_date = models.DateField(verbose_name="hospitation Date")
+    hospitation_date = models.DateField(verbose_name="hospitation Date", blank=True, null=True)
     created_at = models.DateField(verbose_name="date", auto_now=False, auto_now_add=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name="status", default='W')
     hospitation_team = models.ForeignKey(HospitationTeam, on_delete=models.SET_NULL, verbose_name="hospitation Team", blank=True, null=True)
