@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from .models import ProtocolAppeal, AcademicTeacher
 
 
@@ -16,10 +16,23 @@ def appeal_responses_index(request):
 def appeal_responses_details(request, id):
     template = 'hospitation_manager/appeal_responses/details.html'
     context = {
-        'appeal': ProtocolAppeal.objects.filter(id=id)[0]
+        'appeal': ProtocolAppeal.objects.filter(pk=id)[0]
     }
 
     return render(request, template, context)
+
+
+def appeal_responses_edit(request, id):
+    if request.method == 'GET':
+        template = 'hospitation_manager/appeal_responses/edit.html'
+        context = {
+            'appeal': ProtocolAppeal.objects.filter(pk=id)[0]
+        }
+
+        return render(request, template, context)
+    if request.method == 'PUT':
+        return HttpResponse('Updated succesfully')
+    return HttpResponseBadRequest('Invalid request')
 
 
 
