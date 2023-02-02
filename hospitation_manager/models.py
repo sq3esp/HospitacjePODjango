@@ -57,7 +57,7 @@ class HospitationProtocol(models.Model):
     appeal = models.OneToOneField(ProtocolAppeal, verbose_name="appeal", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self) -> str:
-        return f"{self.issuer.last_name} : {self.protocol_content}, is appeal lodged?: {self.is_appeal_lodged}"
+        return f"{self.issuer.last_name} : {self.protocol_content}"
 
 class Hospitation(models.Model):
     STATUS_CHOICES = [
