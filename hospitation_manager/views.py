@@ -35,11 +35,11 @@ def appeal_responses_edit(request, id):
         data = json.load(request)
         if data.get('status') == 'accept':
             ProtocolAppeal.objects.filter(pk=id).update(status='ZA', dean_response=data.get('dean_response'))
-            messages.success(request, 'Zaakceptowano')
+            messages.success(request, 'Pomyślnie zaakceptowano odwołanie')
             return HttpResponse('Updated succesfully')
         if data.get('status') == 'decline':
             ProtocolAppeal.objects.filter(pk=id).update(status='OD', dean_response=data.get('dean_response'))
-            messages.success(request, 'Odrzucono')
+            messages.error(request, 'Pomyślnie odrzucono odwołanie')
             return HttpResponse('Updated succesfully')
         return HttpResponseBadRequest('Invalid request')
     return HttpResponseBadRequest('Invalid request')
