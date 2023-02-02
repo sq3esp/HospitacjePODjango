@@ -1,0 +1,45 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Członkowie WZHZ</h5>
+        <a href="{% url 'add_wzhz_member' %}" class="btn-floating btn-large green right" style="margin-left:10px">
+            <i class="material-icons">add</i>
+        </a>
+    </div>
+    <div class="data-section-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Lp. </th>
+                    <th>Pracownik</th>
+                    <th>Data powołania</th>
+                    <th class="center">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wzhz_member in wzhz_members %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ wzhz_member.academic_title }} {{ wzhz_member.first_name }} {{ wzhz_member.last_name }}</td>
+                    <td>{{ wzhz_member.appointment_to_WZHZ_date }}</td>
+                    <td class="center" style="width: 400px">
+                        <a class="waves-effect waves-light btn blue" href="details/{{ wzhz_member.id }}"><i class="material-icons right">assignment</i>Szczegóły</a>
+                        <a class="waves-effect waves-light btn red" href="delete/{{ wzhz_member.id }}"><i class="material-icons right">delete</i>Usuń</a>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
