@@ -54,7 +54,7 @@ class HospitationProtocol(models.Model):
     created_at = models.DateField(verbose_name="lodging date", auto_now=False, auto_now_add=True)
     protocol_content = models.TextField(verbose_name="content of protocol")
     is_appeal_lodged = models.BooleanField(verbose_name="is appeal lodged?", default=False)
-    appeal = models.ForeignKey(ProtocolAppeal, verbose_name="appeal", on_delete=models.SET_NULL, blank=True, null=True)
+    appeal = models.OneToOneField(ProtocolAppeal, verbose_name="appeal", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self) -> str:
         return f"{self.issuer.last_name} : {self.protocol_content}, is appeal lodged?: {self.is_appeal_lodged}"
@@ -70,7 +70,7 @@ class Hospitation(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name="status", default='W')
     hospitation_team = models.ForeignKey(HospitationTeam, on_delete=models.SET_NULL, verbose_name="hospitation Team", blank=True, null=True)
     classes = models.ForeignKey(Classes, on_delete=models.CASCADE, verbose_name="classes")
-    associated_protocol = models.ForeignKey(HospitationProtocol, on_delete=models.SET_NULL, verbose_name="associated protocol", blank=True, null=True)
+    associated_protocol = models.OneToOneField(HospitationProtocol, on_delete=models.SET_NULL, verbose_name="associated protocol", blank=True, null=True)
 
     def __str__(self) -> str:
         return f"{self.number} : {self.hospitation_date}, {self.status}, {self.classes.name}"
