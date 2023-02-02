@@ -2,7 +2,6 @@ const UPDATE_URI = '/appeal_responses/edit/'
 const id = JSON.parse(document.getElementById('appeal-data').textContent);
 const csrftoken = getCookie('csrftoken');
 
-const dean_response = document.querySelector('#dean_response').value;
 const acceptButton = document.querySelector('#accept');
 const declineButton = document.querySelector('#decline');
 
@@ -23,6 +22,7 @@ declineButton.addEventListener('click', () => {
 
 // status = 'accept' | 'decline'
 async function sendUpdateRequest(status) {
+    const dean_response = document.querySelector('#dean_response').value;
     const data = {
         status,
         dean_response
@@ -36,7 +36,7 @@ async function sendUpdateRequest(status) {
         },
         body: JSON.stringify(data)
     })
-        .then(res => console.log(res.status))
+        .then(res => res.status)
         .catch(err => console.error(err))
 }
 
