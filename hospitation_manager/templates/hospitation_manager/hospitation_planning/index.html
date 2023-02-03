@@ -1,0 +1,98 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock title %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+    .btn {
+        width: 50%;
+        border-radius: 50px;
+        margin:2px;
+      }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<script>
+    var teacherId = null;
+    var teacherName = null;
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if message != ""%}
+            M.toast({html: '<h3>{{ message }}</h3>', classes: 'rounded {{messageColor}} large', inDuration: 1000, displayLength:2000})
+        {% endif %}
+        function showModal(name) {
+          var elems = document.querySelectorAll('.modal');
+          var instances = M.Modal.init(elems, {});
+          }
+
+        document.querySelectorAll('.modal-trigger').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+              teacherId = this.getAttribute('data-id');
+              teacherName = this.getAttribute('data-name');
+              document.querySelector('#modal1 .modal-content p').innerHTML = 'Czy na pewno chcesz odwołać "' + teacherName + '"?';
+              document.querySelector('#form_id').value = teacherId;
+              showModal(teacherName);
+            });
+          });
+      });
+</script>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      
+      <h4>Odwoływanie członka WZHZ</h4>
+      <p>Null</p>
+    </div>
+    <div class="modal-footer">
+      <form method="post">
+          <input type="hidden" name="id" id="form_id" value=""/>
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Anuluj</a>
+          <button id="action_confirm" class="modal-close waves-effect waves-green btn-flat" type="submit">Odwołaj</button>
+      </form>
+    </div>
+</div>
+
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <div class="valign-wrapper">
+            <h5>Planowane hospitacje</h5>
+        </div>
+        <div class="valign-wrapper">
+            <a href="{% url 'add_hospitation' %}" class="waves-effect waves-light btn-large green right" style = "margin-left:80px"><i class="material-icons right">add</i>Dodaj nową hospitację</a>
+        </div>
+    </div>
+    <div class="data-section-body">
+        {% for hospitation in hospitations %}
+
+            
+            <div class="card">
+              <div class="row valign-wrapper">
+                <div class="col s12 m6">
+                  <div class="card-content">
+                    <h5>Numer hospitacji: {{ hospitation.number }}</h5>
+                    <h5>Prowadzący zajęcia: {{ hospitation.classes.teacher.academic_title }} {{ hospitation.classes.teacher.first_name }} {{ hospitation.classes.teacher.last_name }}</h5>
+                    <h5>Planowana data hospitacji: {% if hospitation.hospitation_date == None %}
+                        Nie zaplanowano
+                    {% else %}
+                        {{ hospitation.hospitation_date|date:"d-m-Y" }}
+                    {% endif %}</h5>
+                  </div>
+                </div>
+                <div class="col s12 m6 right-align">
+                  <div class="card-action">
+                    <a class="waves-effect waves-light btn blue rounded" href="details/{{ hospitation.number }}"><i class="material-icons right">assignment</i>Szczegóły</a>
+                    <br>
+                    <a class="waves-effect waves-light btn orange modal-trigger " href="edit/{{ hospitation.number }}"><i class="material-icons right">edit</i>Edytuj</a>
+                    <br>
+                    <a class="waves-effect waves-light btn red modal-trigger " href="#modal1" data-id="{{ hospitation.number }}"><i class="material-icons right">delete</i>Odwołaj</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
