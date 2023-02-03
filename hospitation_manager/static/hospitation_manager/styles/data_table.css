@@ -112,3 +112,23 @@ main * {
     justify-content: center;
     align-items: center;
 }
+
+.relation-collection-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.relation-collection-header {
+    height: 2em;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.relation-collection-body {
+    padding: 20px;
+    border: #616161 solid 2px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex-grow: 1;
+}

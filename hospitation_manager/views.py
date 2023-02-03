@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib import messages
-from .models import ProtocolAppeal, AcademicTeacher, HospitationTeam
+from .models import ProtocolAppeal, AcademicTeacher, HospitationTeam, Hospitation
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
@@ -57,7 +57,8 @@ def hospitation_teams_index(request):
 def hospitation_teams_details(request, id):
     template = 'hospitation_manager/hospitation_teams/details.html'
     context = {
-        'team': get_object_or_404(HospitationTeam, pk=id)
+        'team': get_object_or_404(HospitationTeam, pk=id),
+        'hospitations': Hospitation.objects.filter(hospitation_team__number=id)
     }
 
     return render(request, template, context)
