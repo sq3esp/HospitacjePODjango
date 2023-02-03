@@ -1,0 +1,88 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Szczegóły planowanej hospitacji</title> {% endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<div class="details-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Szczegóły planowanej hospitacji</h5>
+    </div>
+    <div class="data-section-body card">
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Prowadzący: </h6>
+                <p>{{ hospitation.classes.teacher.academic_title }} {{ hospitation.classes.teacher.first_name }} {{ hospitation.classes.teacher.last_name }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Planowana data hospitacji: </h6>
+                {% if hospitation.hospitation_date == 'None' or hospitation.hospitation_date == Null %}
+                <p>Nie zaplanowano</p>
+                {% else %}
+                <p>{{ hospitation.hospitation_date |date:"d-m-Y" }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Hospitowane zajęcia: </h6> </br>
+                {%if hospitation.classes.name == 'None' or hospitation.classes.name == ""%}
+                <p>Brak przypisanych zajęć</p>
+                {% else %}
+                <p>{{ hospitation.classes.name }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {%if hospitation.hospitation_team == 'None'%}
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Zespół hospitacyjny: </h6>
+                <p>Brak przypisanego zespołu</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Zespół hospitacyjny: </h6>
+                <p>Zespół numer {{ hospitation.hospitation_team.number }}:</p>
+                <p> * {{ hospitation.hospitation_team.academic_teacher1 }}</p>
+                <p> * {{ hospitation.hospitation_team.academic_teacher2 }}</p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Czas i miejsce zajęć: </h6> </br>
+                {%if hospitation.classes.time_and_location == 'None' or hospitation.classes.time_and_location == ""%}
+                <p>Brak przypisanych zajęć</p>
+                {% else %}
+                <p>{{ hospitation.classes.time_and_location }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+                <h6>Data utworzenia hospitacji: </h6> </br>
+                <p>{{ hospitation.created_at |date:"d-m-Y" }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container large-data-container col s12">
+            </div>
+        </div>   
+
+    </div>
+    <div class="action-button-container row" style="margin-top:50px;">
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn blue" href="/hospitation_planning/"><i class="material-icons right">arrow_back</i>Powrót</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
