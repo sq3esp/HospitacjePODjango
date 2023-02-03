@@ -29,7 +29,7 @@ async function sendUpdateRequest(status) {
         dean_response
     }
 
-    await fetch(UPDATE_URI + id, {
+    return await fetch(UPDATE_URI + id, {
         method: 'PUT',
         headers: {
             "X-Requested-With": "XMLHttpRequest",

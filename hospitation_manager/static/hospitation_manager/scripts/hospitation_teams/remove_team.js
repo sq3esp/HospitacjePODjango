@@ -8,7 +8,7 @@ function removeTeam(id) {
 }
 
 async function removeRequest(id) {
-    await fetch('/hospitation_teams/delete/' + id, {
+    return await fetch('/hospitation_teams/delete/' + id, {
         method: 'DELETE',
         mode: 'cors',
         headers: {
