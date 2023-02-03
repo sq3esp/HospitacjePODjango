@@ -46,8 +46,6 @@ class WZHZDetailsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
->>>>>>> 41dd9d29531e6a90fc3c0c11cfa09204f7d93570
-
 class ProtocolAppealTestCase(TestCase):
     def setUp(self) -> None:
         AcademicTeacher.objects.create(

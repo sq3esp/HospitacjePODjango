@@ -17,7 +17,7 @@
             <div class="row-container relation-container col s5">
                 <h6>Składający odwołanie: </h6>
                 <p>{{ appeal.issuer }}</p>
-                <a href="/wzhz/details/{{appeal.issuer.id}}" class="waves-effect waves-light btn blue disabled">Szczegóły</a>
+                <a href="/wzhz/details/{{appeal.issuer.id}}" class="waves-effect waves-light btn blue">Szczegóły</a>
             </div>
             <div class="row-container field-container col s3 right">
                 {% if appeal.status == 'OD' %}
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="row-container field-container col s5">
                 <h6>Data złożenia odwołania: </h6>
-                <p>{{ appeal.created_at }}</p>
+                <p>{{ appeal.created_at|date:"d-m-Y" }}</p>
             </div>
         </div>
         <div class="row last">
