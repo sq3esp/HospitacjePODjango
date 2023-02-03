@@ -170,7 +170,20 @@ def hospitation_planning_details(request, hospitation_id):
 
 
 def hospitation_planning_add(request):
-    return render(request, 'hospitation_manager/hospitation_planning/add.html')
+    message = ''
+    messageColor = ''
+    if request.method == 'POST':
+        message = 'Hospitacja została dodana'
+        messageColor = 'green'
+
+    template = 'hospitation_manager/hospitation_planning/add.html'
+    hospitation_teams = HospitationTeam.objects.all()
+    classes = Classes.objects.all()
+    protocols = HospitationProtocol.objects.all()
+    context = {'hospitation_teams': hospitation_teams, 'classes':classes,'protocols':protocols, 'message': message, 'messageColor': messageColor}
+    return render(request, template, context)
+
+
 def hospitation_planning_edit(request):
     return render(request, 'hospitation_manager/hospitation_planning/edit.html')
 

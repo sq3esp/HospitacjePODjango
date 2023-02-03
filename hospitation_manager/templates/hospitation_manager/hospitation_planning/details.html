@@ -17,13 +17,17 @@
         <div class="row">
             <div class="row-container large-data-container col s12">
                 <h6>Prowadzący: </h6>
+                {% if hospitation.classes.teacher.first_name == None or hospitation.classes.teacher.first_name == '' %}
+                <p>Nie przypisany do zajęć</p>
+                {% else %}
                 <p>{{ hospitation.classes.teacher.academic_title }} {{ hospitation.classes.teacher.first_name }} {{ hospitation.classes.teacher.last_name }}</p>
+                {% endif %}
             </div>
         </div>
         <div class="row">
             <div class="row-container large-data-container col s12">
                 <h6>Planowana data hospitacji: </h6>
-                {% if hospitation.hospitation_date == 'None' or hospitation.hospitation_date == Null %}
+                {% if hospitation.hospitation_date == None or hospitation.hospitation_date == Null %}
                 <p>Nie zaplanowano</p>
                 {% else %}
                 <p>{{ hospitation.hospitation_date |date:"d-m-Y" }}</p>
@@ -33,14 +37,14 @@
         <div class="row">
             <div class="row-container large-data-container col s12">
                 <h6>Hospitowane zajęcia: </h6> </br>
-                {%if hospitation.classes.name == 'None' or hospitation.classes.name == ""%}
+                {%if hospitation.classes.name == None or hospitation.classes.name == ""%}
                 <p>Brak przypisanych zajęć</p>
                 {% else %}
                 <p>{{ hospitation.classes.name }}</p>
                 {% endif %}
             </div>
         </div>
-        {%if hospitation.hospitation_team == 'None'%}
+        {%if hospitation.hospitation_team == None %}
         <div class="row">
             <div class="row-container large-data-container col s12">
                 <h6>Zespół hospitacyjny: </h6>
