@@ -25,6 +25,7 @@ async function sendUpdateRequest(status) {
     const dean_response = document.querySelector('#dean_response').value;
     const data = {
         status,
+        mode: 'cors',
         dean_response
     }
 
