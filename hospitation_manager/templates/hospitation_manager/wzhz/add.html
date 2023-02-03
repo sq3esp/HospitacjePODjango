@@ -12,6 +12,9 @@
     var teacherId = null;
     var teacherName = null;
     document.addEventListener('DOMContentLoaded', function() {
+      {% if message != ""%}
+        M.toast({html: '<h3>{{ message }}</h3>', classes: 'rounded {{messageColor}} large', inDuration: 1000, displayLength:2000})
+      {% endif %}
         function showModal(name) {
           var elems = document.querySelectorAll('.modal');
           var instances = M.Modal.init(elems, {});
