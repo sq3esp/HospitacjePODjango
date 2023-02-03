@@ -20,7 +20,7 @@
         {% block navigation %}
         <div class="nav-wrapper grey darken-1">
             <ul class="right hide-on-med-and-down">
-                <li><h5>Zalgowano jako: Dziekan</h5></li>
+                <li><h5>Zalogowano jako: Dziekan</h5></li>
             </ul>
         </div>
         {% endblock %}
@@ -37,7 +37,7 @@
         {% block sidenav_links %}
             <li><a href="#" class="white-text flow-text sidenav-link">test link 1</a></li>
             <li><a href="/appeal_responses/" class="white-text flow-text sidenav-link">Odwołania od protokołów</a></li>
-            <li><a href="#" class="white-text flow-text sidenav-link">test link 3</a></li>
+            <li><a href="/wzhz/" class="white-text flow-text sidenav-link">Zarządzaj WZHZ</a></li>
             <li><a href="#" class="white-text flow-text sidenav-link">test link 4</a></li>
             <li><a href="#" class="white-text flow-text sidenav-link">test link 5</a></li>
         {% endblock %}
@@ -50,6 +50,19 @@
     </main>
 
     <script src="{% static 'hospitation_manager/scripts/materialize.js' %}"></script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success'%}
+                <script type=text/javascript>M.toast({html: '{{ message }}', classes: "green white-text"})</script>
+            {% elif message.tags == 'info' %}
+                <script type=text/javascript>M.toast({html: '{{ message }}', classes: "blue white-text"})</script>
+            {% elif message.tags == 'warning' %}
+                <script type=text/javascript>M.toast({html: '{{ message }}', classes: "yellow white-text"})</script>
+            {% elif message.tags == 'error' %}
+                <script type=text/javascript>M.toast({html: '{{ message }}', classes: "red white-text"})</script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     {% block scripts %}{% endblock %}
 </body>
 </html>

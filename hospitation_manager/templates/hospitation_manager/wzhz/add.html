@@ -1,0 +1,89 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock title %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block content %}
+<script>
+    var teacherId = null;
+    var teacherName = null;
+    document.addEventListener('DOMContentLoaded', function() {
+      {% if message != ""%}
+        M.toast({html: '<h3>{{ message }}</h3>', classes: 'rounded {{messageColor}} large', inDuration: 1000, displayLength:2000})
+      {% endif %}
+        function showModal(name) {
+          var elems = document.querySelectorAll('.modal');
+          var instances = M.Modal.init(elems, {});
+          }
+
+        document.querySelectorAll('.modal-trigger').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+              teacherId = this.getAttribute('data-id');
+              teacherName = this.getAttribute('data-name');
+              document.querySelector('#modal1 .modal-content p').innerHTML = 'Czy na pewno chcesz powołać "' + teacherName + '" jako nowego członka WZHZ?';
+              document.querySelector('#form_id').value = teacherId;
+              showModal(teacherName);
+            });
+          });
+      });
+</script>
+
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    
+    <h4>Powoływanie członka WZHZ</h4>
+    <p>Null</p>
+  </div>
+  <div class="modal-footer">
+    <form method="post">
+        <input type="hidden" name="id" id="form_id" value=""/>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Anuluj</a>
+        <button id="action_confirm" class="modal-close waves-effect waves-green btn-flat" type="submit">Powołaj</button>
+    </form>
+  </div>
+</div>
+
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+      <div class="valign-wrapper">
+        <h5>Kandydaci na członków WZHZ</h5>
+      </div>
+      <div class="valign-wrapper">
+        <a href="{% url 'wzhz_index' %}" class="waves-effect waves-light btn-large blue right" style = "margin-left:80px"><i class="material-icons left">arrow_back</i>Powrót</a>
+      </div>
+
+    </div>
+    {% if not_wzhz_members|length > 0 %}
+    <div class="data-section-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Lp. </th>
+                    <th>Pracownik</th>
+                    <th class="center">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for not_wzhz_member in not_wzhz_members %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ not_wzhz_member.academic_title }} {{ not_wzhz_member.first_name }} {{ not_wzhz_member.last_name }}</td>
+                    <td class="center" style="width: 400px">
+                        <a class="waves-effect waves-light btn green modal-trigger" href="#modal1" data-id="{{ not_wzhz_member.id }}" data-name="{{ not_wzhz_member.academic_title }} {{ not_wzhz_member.first_name }} {{ not_wzhz_member.last_name }}"><i class="material-icons right">add</i>Powołaj</a>                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="data-section-body">
+        <p>Brak kandydatów na członków WZHZ</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

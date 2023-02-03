@@ -1,0 +1,86 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock title %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block content %}
+<script>
+    var teacherId = null;
+    var teacherName = null;
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if message != ""%}
+            M.toast({html: '<h3>{{ message }}</h3>', classes: 'rounded {{messageColor}} large', inDuration: 1000, displayLength:2000})
+        {% endif %}
+        function showModal(name) {
+          var elems = document.querySelectorAll('.modal');
+          var instances = M.Modal.init(elems, {});
+          }
+
+        document.querySelectorAll('.modal-trigger').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+              teacherId = this.getAttribute('data-id');
+              teacherName = this.getAttribute('data-name');
+              document.querySelector('#modal1 .modal-content p').innerHTML = 'Czy na pewno chcesz odwołać "' + teacherName + '"?';
+              document.querySelector('#form_id').value = teacherId;
+              showModal(teacherName);
+            });
+          });
+      });
+</script>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      
+      <h4>Odwoływanie członka WZHZ</h4>
+      <p>Null</p>
+    </div>
+    <div class="modal-footer">
+      <form method="post">
+          <input type="hidden" name="id" id="form_id" value=""/>
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Anuluj</a>
+          <button id="action_confirm" class="modal-close waves-effect waves-green btn-flat" type="submit">Odwołaj</button>
+      </form>
+    </div>
+</div>
+
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <div class="valign-wrapper">
+            <h5>Członkowie WZHZ</h5>
+        </div>
+        <div class="valign-wrapper">
+            <a href="{% url 'add_wzhz_member' %}" class="waves-effect waves-light btn-large green right" style = "margin-left:80px"><i class="material-icons right">add</i>Powołaj nowego członka</a>
+        </div>
+    </div>
+    <div class="data-section-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Lp. </th>
+                    <th>Pracownik</th>
+                    <th>Data powołania</th>
+                    <th class="center">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wzhz_member in wzhz_members %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ wzhz_member.academic_title }} {{ wzhz_member.first_name }} {{ wzhz_member.last_name }}</td>
+                    <td>{{ wzhz_member.appointment_to_WZHZ_date|date:"d-m-Y" }}</td>
+                    <td class="center">
+                        <a class="waves-effect waves-light btn blue" href="details/{{ wzhz_member.id }}"><i class="material-icons right">assignment</i>Szczegóły</a>
+                        <a class="waves-effect waves-light btn red modal-trigger" href="#modal1" data-id="{{ wzhz_member.id }}"><i class="material-icons right">delete</i>Odwołaj</a>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
