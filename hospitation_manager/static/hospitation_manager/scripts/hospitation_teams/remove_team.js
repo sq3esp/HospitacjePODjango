@@ -15,8 +15,6 @@ async function removeRequest(id) {
             'X-CSRFToken': csrftoken
         }
     })
-        .then(res => res.status)
-        .catch(err => console.error(err))
 }
 
 function getCookie(name) {

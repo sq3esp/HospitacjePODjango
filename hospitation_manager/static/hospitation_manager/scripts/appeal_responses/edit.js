@@ -36,8 +36,6 @@ async function sendUpdateRequest(status) {
         },
         body: JSON.stringify(data)
     })
-        .then(res => res.status)
-        .catch(err => console.error(err))
 }
 
 function getCookie(name) {
