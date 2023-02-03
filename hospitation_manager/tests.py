@@ -1,5 +1,5 @@
 from django.test import Client, TestCase
-from .models import AcademicTeacher, Hospitation, Classes
+from .models import ProtocolAppeal, AcademicTeacher, HospitationTeam, Hospitation, Classes
 
 class WZHZAddMemberTestCase(TestCase):
     def test_add_to_WZHZ(self):
@@ -45,7 +45,6 @@ class WZHZDetailsTestCase(TestCase):
         response = client.get('/wzhz/details/1')
 
         self.assertEqual(response.status_code, 404)
-
 
 class ProtocolAppealTestCase(TestCase):
     def setUp(self) -> None:

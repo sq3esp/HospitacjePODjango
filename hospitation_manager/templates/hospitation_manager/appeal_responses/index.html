@@ -28,7 +28,7 @@
                 <tr>
                     <td>{{ appeal.id }}</td>
                     <td>{{ appeal.issuer }}</td>
-                    <td>{{ appeal.created_at }}</td>
+                    <td>{{ appeal.created_at|date:"d-m-Y" }}</td>
                     {% if appeal.status == 'OD' %}
                         <td class="red-text">Odrzucone</td>
                     {% elif appeal.status == 'ZA' %}

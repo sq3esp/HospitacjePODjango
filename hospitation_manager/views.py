@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib import messages
-from .models import ProtocolAppeal, AcademicTeacher
+from .models import ProtocolAppeal, AcademicTeacher, HospitationTeam, Hospitation
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from django.core import serializers
 
 import json
 
@@ -20,7 +21,7 @@ def appeal_responses_index(request):
 def appeal_responses_details(request, id):
     template = 'hospitation_manager/appeal_responses/details.html'
     context = {
-        'appeal': ProtocolAppeal.objects.get(pk=id)
+        'appeal' : get_object_or_404(ProtocolAppeal, pk=id)
     }
 
     return render(request, template, context)
@@ -29,7 +30,7 @@ def appeal_responses_edit(request, id):
     if request.method == 'GET':
         template = 'hospitation_manager/appeal_responses/edit.html'
         context = {
-            'appeal': ProtocolAppeal.objects.get(pk=id)
+            'appeal' : get_object_or_404(ProtocolAppeal, pk=id)
         }
 
         return render(request, template, context)
@@ -46,6 +47,40 @@ def appeal_responses_edit(request, id):
         return HttpResponseBadRequest('Invalid request')
     return HttpResponseBadRequest('Invalid request')
 
+def hospitation_teams_index(request):
+    template = 'hospitation_manager/hospitation_teams/index.html'
+    context = {
+        'hospitation_teams': HospitationTeam.objects.all()
+    }
+
+    return render(request, template, context)
+
+def hospitation_teams_details(request, id):
+    template = 'hospitation_manager/hospitation_teams/details.html'
+    context = {
+        'team': get_object_or_404(HospitationTeam, pk=id),
+        'hospitations': Hospitation.objects.filter(hospitation_team__number=id)
+    }
+
+    return render(request, template, context)
+
+def hospitation_teams_edit(request, id):
+    template = 'hospitation_manager/hospitation_teams/edit.html'
+    hospitations = Hospitation.objects.filter(hospitation_team__number=id)
+    all_hospitations = Hospitation.objects.all()
+    context = {
+        'team': get_object_or_404(HospitationTeam, pk=id),
+        'hospitations': hospitations,
+        'all_hospitations': all_hospitations
+    }
+
+    return render(request, template, context)
+
+def hospitation_teams_delete(request, id):
+    if request.method == 'DELETE':
+        HospitationTeam.objects.get(pk=id).delete()
+        return HttpResponse('Deleted succesfully')
+    return HttpResponseBadRequest('Bad request')
 
 @csrf_exempt 
 def wzhz_index(request):

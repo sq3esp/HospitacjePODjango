@@ -19,13 +19,22 @@ main * {
 }
 
 .data-section-header {
-    height: 5rem;
+    height: 75px;
     padding-left: 30px;
+    flex-shrink: 0;
+
+    position: relative;
+}
+
+.data-section-header>a {
+    position: absolute;
+    right: 30px;
 }
 
 .data-section-body {
     padding: 30px 30px 0 30px;
     flex-grow: 1;
+    overflow: auto;
 }
 
 .row-container {
@@ -102,4 +111,31 @@ main * {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.relation-collection-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.relation-collection-header {
+    height: 2em;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.relation-collection-body {
+    padding: 10px;
+    border: #616161 solid 2px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex-grow: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.buttons-container {
+    position: absolute;
+    bottom: 10px;
 }

@@ -90,7 +90,6 @@ class HospitationProtocol(models.Model):
     # comments = models.IntegerField(_("komentarze"), validators=[MaxValueValidator(5), MinValueValidator(2)])
     # documentation = models.IntegerField(_("dokumentacja"), validators=[MaxValueValidator(5), MinValueValidator(2)])
 
-
     def __str__(self) -> str:
         return f"{self.issuer.last_name} : {self.protocol_content}"
 

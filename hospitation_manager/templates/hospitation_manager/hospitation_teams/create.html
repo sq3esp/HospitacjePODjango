@@ -1,0 +1,98 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+{{ hospitations_JSON|json_script:"hospitations-data"}}
+<script src="{% static 'hospitation_manager/scripts/hospitation_teams/dynamic_list.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Zespół hospitacyjny numer: {{team.number}}</h5>
+    </div>
+    <div class="data-section-body">
+        <div class="row">
+            <div class="row-container relation-container col s5">
+                <h6>Prowadzący(a) #1: </h6>
+                <p>{{ team.academic_teacher1 }}</p>
+                <a href="/wzhz/details/{{team.academic_teacher1.id}}" class="waves-effect waves-light btn blue"><i class="material-icons right">assignment</i>Szczegóły</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container relation-container col s5">
+                <h6>Prowadzący(a) #2: </h6>
+                <p>{{ team.academic_teacher2 }}</p>
+                <a href="/wzhz/details/{{team.academic_teacher2.id}}" class="waves-effect waves-light btn blue"><i class="material-icons right">assignment</i>Szczegóły</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container field-container col s5">
+                <h6>Data utworzenia zespołu: </h6>
+                <p>{{ team.created_at|date:"d-m-Y" }}</p>
+            </div>
+        </div>
+        <div class="row last">
+            <div class="row-container large-data-container col s12">
+                <div class="relation-collection-container col s12">
+                    <div class="relation-collection-header grey darken-1 col s12 center">
+                        <h5 class="white-text">Lista przydzielonych hospitacji</h5>
+                    </div>
+                    <div class="relation-collection-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nr.</th>
+                                    <th>Hospitowany</th>
+                                    <th>Zajęcia</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th class="center">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hospitation in hospitations %}
+                                    <tr>
+                                        <td>{{ hospitation.number }}</td>
+                                        <td>{{ hospitation.classes.teacher }}</td>
+                                        <td>{{ hospitation.classes }}</td>
+                                        <td>{{ hospitation.hospitation_date|date:"d-m-Y" }}</td>
+                                        {% if appeal.status == 'Z' %}
+                                            <td class="green-text">Przeprowadzona</td>
+                                        {% elif appeal.status == 'O' %}
+                                            <td class="red-text">Odwołana</td>
+                                        {% elif appeal.status == 'P' %}
+                                            <td class="blue-text">Planowana</td>
+                                        {% else %}
+                                            <td>Oczekuje na przeprowadzenie</td>
+                                        {% endif %}
+                                        <td class="center">
+                                            <a class="waves-effect waves-light btn blue disabled" href="#"><i class="material-icons right">assignment</i>Szczegóły</a>
+                                            <a class="waves-effect waves-light btn red disabled" href="/hospitation_teams/edit/{{team.id}}"><i class="material-icons right">clear</i>Usuń</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="action-button-container row">
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn blue" href="/hospitation_teams/"><i class="material-icons right">block</i>Anuluj</a>
+        </div>
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn green" href="/hospitation_teams/edit/{{team.number}}"><i class="material-icons right">check</i>Akceptuj</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
