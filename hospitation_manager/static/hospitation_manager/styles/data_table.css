@@ -132,4 +132,10 @@ main * {
     border-bottom-right-radius: 5px;
     flex-grow: 1;
     overflow: auto;
+    position: relative;
+}
+
+.buttons-container {
+    position: absolute;
+    bottom: 10px;
 }

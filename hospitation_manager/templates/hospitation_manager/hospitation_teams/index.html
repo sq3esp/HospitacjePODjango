@@ -7,6 +7,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
+{% block scripts %}
+<script src="{% static 'hospitation_manager/scripts/hospitation_teams/remove_team.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="data-section-container">
     <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
@@ -33,7 +37,7 @@
                     <td>{{ team.created_at|date:"d-m-Y" }}</td>
                     <td class="center" style="width: 400px">
                         <a class="waves-effect waves-light btn blue" href="details/{{ team.number }}"><i class="material-icons right">assignment</i>Szczegóły</a>
-                        <button class="waves-effect waves-light btn red" href="delete/{{ team.number }}"><i class="material-icons right">delete</i>Usuń</button>
+                        <button class="waves-effect waves-light btn red" onclick="removeTeam({{team.number}})"><i class="material-icons right">delete</i>Usuń</button>
                     </td>
                 </tr>
                 {% endfor %}

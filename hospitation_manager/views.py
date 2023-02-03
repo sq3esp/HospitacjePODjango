@@ -65,16 +65,22 @@ def hospitation_teams_details(request, id):
     return render(request, template, context)
 
 def hospitation_teams_edit(request, id):
-    template = 'hospitation_manager/hospitation_teams/details.html'
+    template = 'hospitation_manager/hospitation_teams/edit.html'
     hospitations = Hospitation.objects.filter(hospitation_team__number=id)
-    hospitations_JSON = serializers.serialize('json', hospitations)
+    all_hospitations = Hospitation.objects.all()
     context = {
         'team': get_object_or_404(HospitationTeam, pk=id),
         'hospitations': hospitations,
-        'hospitations_JSON': hospitations_JSON
+        'all_hospitations': all_hospitations
     }
 
     return render(request, template, context)
+
+def hospitation_teams_delete(request, id):
+    if request.method == 'DELETE':
+        HospitationTeam.objects.get(pk=id).delete()
+        return HttpResponse('Deleted succesfully')
+    return HttpResponseBadRequest('Bad request')
 
 @csrf_exempt 
 def wzhz_index(request):

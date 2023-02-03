@@ -10,6 +10,8 @@ urlpatterns = [
 
     path('hospitation_teams/', views.hospitation_teams_index),
     path('hospitation_teams/details/<int:id>', views.hospitation_teams_details),
+    path('hospitation_teams/edit/<int:id>', views.hospitation_teams_edit),
+    path('hospitation_teams/delete/<int:id>', views.hospitation_teams_delete),
 
     path('wzhz/', views.wzhz_index, name = 'wzhz_index'),
     path('wzhz/add', views.wzhz_add, name = 'add_wzhz_member'),

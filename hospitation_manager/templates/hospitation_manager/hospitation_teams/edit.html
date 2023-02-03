@@ -7,6 +7,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
+{% block scripts %}
+<script src="{% static 'hospitation_manager/scripts/hospitation_teams/dynamic_list.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="data-section-container">
     <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
@@ -67,11 +71,24 @@
                                         {% else %}
                                             <td>Oczekuje na przeprowadzenie</td>
                                         {% endif %}
-                                        <td class="center"><a class="waves-effect waves-light btn blue disabled" href="#"><i class="material-icons right">assignment</i>Szczegóły</a></td>
+                                        <td class="center">
+                                            <a class="waves-effect waves-light btn blue disabled" href="#"><i class="material-icons right">assignment</i>Szczegóły</a>
+                                            <a class="waves-effect waves-light btn red disabled" href="/hospitation_teams/edit/{{team.id}}"><i class="material-icons right">clear</i>Usuń</a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <div class="buttons-container col s11">
+                            <div class="input-field">
+                                <select name="hospitation" id="hospitation-select">
+                                    {% for hospitation in all_hospitations %}
+                                        <option value="{{hospitation.pk}}"> {{hospitation}} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <a class="waves-effect waves-light btn green right" href="/hospitation_teams/edit/{{team.id}}"><i class="material-icons right">add</i>Dodaj</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,10 +96,10 @@
     </div>
     <div class="action-button-container row">
         <div class="col s6 center">
-            <a class="waves-effect waves-light btn blue" href="/hospitation_teams/"><i class="material-icons right">arrow_back</i>Powrót</a>
+            <a class="waves-effect waves-light btn blue" href="/hospitation_teams/"><i class="material-icons right">block</i>Anuluj</a>
         </div>
         <div class="col s6 center">
-            <a class="waves-effect waves-light btn blue" href="/hospitation_teams/edit/{{team.number}}"><i class="material-icons right">create</i>Edytuj</a>
+            <a class="waves-effect waves-light btn green" href="/hospitation_teams/edit/{{team.number}}"><i class="material-icons right">check</i>Akceptuj</a>
         </div>
     </div>
 </div>
