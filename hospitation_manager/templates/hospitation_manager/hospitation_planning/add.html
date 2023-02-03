@@ -5,6 +5,13 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+    .btn {
+        width: 50%;
+        border-radius: 50px;
+        margin:2px;
+      }
+</style>
 {% endblock styles %}
 
 {% block content %}
@@ -12,6 +19,10 @@
     var teacherId = null;
     var teacherName = null;
     document.addEventListener('DOMContentLoaded', function() {
+      var elems2 = document.querySelectorAll('select');
+      var instances2 = M.FormSelect.init(elems2, {});
+      var elems3 = document.querySelectorAll('.datepicker');
+      var instances3 = M.Datepicker.init(elems3, {});
         {% if message != ""%}
             M.toast({html: '<h3>{{ message }}</h3>', classes: 'rounded {{messageColor}} large', inDuration: 1000, displayLength:2000})
         {% endif %}
@@ -35,7 +46,7 @@
 <div id="modal1" class="modal">
     <div class="modal-content">
       
-      <h4>Odwoływanie członka WZHZ</h4>
+      <h4>Dodawanie hospitacji</h4>
       <p>Null</p>
     </div>
     <div class="modal-footer">
@@ -50,37 +61,40 @@
 <div class="data-section-container">
     <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
         <div class="valign-wrapper">
-            <h5>Członkowie WZHZ</h5>
+            <h5>Planowane hospitacje</h5>
+            <a href="/hospitation_planning/" class="waves-effect waves-light btn-large blue right" style = "margin-left:80px"><i class="material-icons left">arrow_back</i>Powrót</a>
         </div>
-        <div class="valign-wrapper">
-            <a href="{% url 'add_wzhz_member' %}" class="waves-effect waves-light btn-large green right" style = "margin-left:80px"><i class="material-icons right">add</i>Powołaj nowego członka</a>
-        </div>
+
     </div>
     <div class="data-section-body">
-        <table>
-            <thead>
-                <tr>
-                    <th>Lp. </th>
-                    <th>Pracownik</th>
-                    <th>Data powołania</th>
-                    <th class="center">Akcje</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for wzhz_member in wzhz_members %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ wzhz_member.academic_title }} {{ wzhz_member.first_name }} {{ wzhz_member.last_name }}</td>
-                    <td>{{ wzhz_member.appointment_to_WZHZ_date|date:"d-m-Y" }}</td>
-                    <td class="center">
-                        <a class="waves-effect waves-light btn blue" href="details/{{ wzhz_member.id }}"><i class="material-icons right">assignment</i>Szczegóły</a>
-                        <a class="waves-effect waves-light btn red modal-trigger" href="#modal1" data-id="{{ wzhz_member.id }}" data-name="{{ wzhz_member.academic_title }} {{ wzhz_member.first_name }} {{ wzhz_member.last_name }}"><i class="material-icons right">delete</i>Odwołaj</a>
-                        
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <form method="post">
+      <div class="input-field col s12">
+        <select name="hospitation_team">
+          <option value="0" selected>Wybierz zespół (opcjonalnie)</option>
+          {% for hospitation_team in hospitation_teams %}
+          <option value="{{hospitation_team.number}}">nr. {{hospitation_team.number}}: {{hospitation_team.academic_teacher1}} | {{hospitation_team.academic_teacher2}}</option>
+          {%endfor%}
+        </select>
+        <label><h6>Wybierz zespół:</h6></label>
+      </div>
+
+      <div class="input-field col s12">
+        <select name="class">
+          <option value="" disabled selected>Wybierz zajęcia</option>
+          {% for class in classes %}
+          <option value="{{class.code}}">{{class.code}}: {{class.teacher.academic_title}} {{class.teacher.first_name}} {{class.teacher.last_name}} | {{class.name}}</option>
+          {%endfor%}
+        </select>
+        <label><h6>Wybierz zajęcia:</h6></label>
+      </div>
+      
+
+      <div class="input-field col s12">
+        <input type="text" class="datepicker">
+        <label for="date">Wybierz datę hospitacji (opcjonalnie):</label>
+      </div>
+
+    </form>
     </div>
 </div>
 {% endblock %}

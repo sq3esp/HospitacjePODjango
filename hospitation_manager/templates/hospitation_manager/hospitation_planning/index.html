@@ -30,8 +30,7 @@
         document.querySelectorAll('.modal-trigger').forEach(function(button) {
             button.addEventListener('click', function(event) {
               teacherId = this.getAttribute('data-id');
-              teacherName = this.getAttribute('data-name');
-              document.querySelector('#modal1 .modal-content p').innerHTML = 'Czy na pewno chcesz odwołać "' + teacherName + '"?';
+              document.querySelector('#modal1 .modal-content p').innerHTML = 'Czy na pewno chcesz usunąć hospitację "' + teacherId + '"?';
               document.querySelector('#form_id').value = teacherId;
               showModal(teacherName);
             });
@@ -72,7 +71,13 @@
                 <div class="col s12 m6">
                   <div class="card-content">
                     <h5>Numer hospitacji: {{ hospitation.number }}</h5>
-                    <h5>Prowadzący zajęcia: {{ hospitation.classes.teacher.academic_title }} {{ hospitation.classes.teacher.first_name }} {{ hospitation.classes.teacher.last_name }}</h5>
+                    <h5>Prowadzący zajęcia: 
+                        {% if hospitation.classes.teacher.first_name == None %}
+                            Nie przypisano do zajęć
+                        {% else %}
+                            {{ hospitation.classes.teacher.academic_title }} {{ hospitation.classes.teacher.first_name }} {{ hospitation.classes.teacher.last_name }}
+                        {% endif %}
+                    </h5>
                     <h5>Planowana data hospitacji: {% if hospitation.hospitation_date == None %}
                         Nie zaplanowano
                     {% else %}
