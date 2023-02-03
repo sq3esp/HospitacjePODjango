@@ -126,9 +126,10 @@ main * {
 }
 
 .relation-collection-body {
-    padding: 20px;
+    padding: 10px;
     border: #616161 solid 2px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     flex-grow: 1;
+    overflow: auto;
 }

@@ -22,7 +22,7 @@
             <div class="row-container relation-container col s5">
                 <h6>Składający odwołanie: </h6>
                 <p>{{ appeal.issuer }}</p>
-                <a href="/wzhz/details/{{appeal.issuer.id}}" class="waves-effect waves-light btn blue">Szczegóły</a>
+                <a href="/wzhz/details/{{appeal.issuer.id}}" class="waves-effect waves-light btn blue"><i class="material-icons right">assignment</i>Szczegóły</a>
             </div>
             <div class="row-container field-container col s3 right">
                 {% if appeal.status == 'OD' %}
@@ -38,7 +38,7 @@
             <div class="row-container relation-container col s5">
                 <h6>Dotyczy protokołu: </h6>
                 <p>{{ appeal.hospitationprotocol }}</p>
-                <a href="#" class="waves-effect waves-light btn blue disabled">Szczegóły</a>
+                <a href="#" class="waves-effect waves-light btn blue disabled"><i class="material-icons right">assignment</i>Szczegóły</a>
             </div>
         </div>
         <div class="row">

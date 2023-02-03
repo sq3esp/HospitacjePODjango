@@ -1,0 +1,46 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock%}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Zespoły hospitacyjne</h5>
+        <a class="waves-effect waves-light btn green right" href="create/"><i class="material-icons right">add</i>Utwórz nowy</a>
+    </div>
+    <div class="data-section-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nr. </th>
+                    <th>Prowadzący(a) #1</th>
+                    <th>Prowadzący(a) #2</th>
+                    <th>Data utworzenia</th>
+                    <th class="center">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in hospitation_teams %}
+                <tr>
+                    <td>{{ team.number }}</td>
+                    <td>{{ team.academic_teacher1 }}</td>
+                    <td>{{ team.academic_teacher2 }}</td>
+                    <td>{{ team.created_at|date:"d-m-Y" }}</td>
+                    <td class="center" style="width: 400px">
+                        <a class="waves-effect waves-light btn blue" href="details/{{ team.number }}"><i class="material-icons right">assignment</i>Szczegóły</a>
+                        <button class="waves-effect waves-light btn red" href="delete/{{ team.number }}"><i class="material-icons right">delete</i>Usuń</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+

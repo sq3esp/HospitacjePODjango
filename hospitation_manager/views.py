@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import ProtocolAppeal, AcademicTeacher, HospitationTeam, Hospitation
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from django.core import serializers
 
 import json
 
@@ -59,6 +60,18 @@ def hospitation_teams_details(request, id):
     context = {
         'team': get_object_or_404(HospitationTeam, pk=id),
         'hospitations': Hospitation.objects.filter(hospitation_team__number=id)
+    }
+
+    return render(request, template, context)
+
+def hospitation_teams_edit(request, id):
+    template = 'hospitation_manager/hospitation_teams/details.html'
+    hospitations = Hospitation.objects.filter(hospitation_team__number=id)
+    hospitations_JSON = serializers.serialize('json', hospitations)
+    context = {
+        'team': get_object_or_404(HospitationTeam, pk=id),
+        'hospitations': hospitations,
+        'hospitations_JSON': hospitations_JSON
     }
 
     return render(request, template, context)
