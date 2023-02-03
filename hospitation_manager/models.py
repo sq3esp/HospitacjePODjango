@@ -57,7 +57,6 @@ class HospitationProtocol(models.Model):
     protocol_content = models.TextField(verbose_name="content of protocol")
     is_appeal_lodged = models.BooleanField(verbose_name="is appeal lodged?", default=False)
     appeal = models.OneToOneField(ProtocolAppeal, verbose_name="appeal", on_delete=models.SET_NULL, blank=True, null=True)
-
     preparation_date = models.DateField(_("data sporządzenia"), auto_now=False, auto_now_add=False)
     confirmation_date = models.DateField(_("data potwierdzenia"), auto_now=False, auto_now_add=False)
     final_evaluation = models.IntegerField(_("ocena końcowa"), validators=[MaxValueValidator(5), MinValueValidator(2)])
@@ -90,8 +89,9 @@ class HospitationProtocol(models.Model):
     comments = models.IntegerField(_("komentarze"), validators=[MaxValueValidator(5), MinValueValidator(2)])
     documentation = models.IntegerField(_("dokumentacja"), validators=[MaxValueValidator(5), MinValueValidator(2)])
 
+
     def __str__(self) -> str:
-        return f"{self.issuer.last_name} : {self.protocol_content}, is appeal lodged?: {self.is_appeal_lodged}"
+        return f"{self.issuer.last_name} : {self.protocol_content}"
 
 class Hospitation(models.Model):
     STATUS_CHOICES = [

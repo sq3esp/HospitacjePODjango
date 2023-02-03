@@ -1,0 +1,73 @@
+{% extends "hospitation_manager/layout.html" %}
+{% load static %}
+
+{% block title %} <title>Menedżer hospitacji</title> {% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'hospitation_manager/styles/data_table.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+{{ appeal.id|json_script:"appeal-data"}}
+<script src="{% static 'hospitation_manager/scripts/appeal_responses/edit.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="data-section-container">
+    <div class="data-section-header white-text grey darken-3 valign-wrapper z-depth-3">
+        <h5>Odpowiedź na odwołanie od protokołu pohospitacyjnego</h5>
+    </div>
+    <div class="data-section-body">
+        <div class="row">
+            <div class="row-container relation-container col s5">
+                <h6>Składający odwołanie: </h6>
+                <p>{{ appeal.issuer }}</p>
+                <a href="#" class="waves-effect waves-light btn blue disabled">Szczegóły</a>
+            </div>
+            <div class="row-container field-container col s3 right">
+                {% if appeal.status == 'OD' %}
+                    <p class="status-text white-text red z-depth-2">Odrzucone</p>
+                {% elif appeal.status == 'ZA' %}
+                    <p class="status-text white-text green z-depth-2">Zatwierdzone</p>
+                {% else %}
+                    <p class="status-text white-text grey z-depth-2">Oczekuje na odpowiedź</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container relation-container col s5">
+                <h6>Dotyczy protokołu: </h6>
+                <p>{{ appeal.hospitationprotocol }}</p>
+                <a href="#" class="waves-effect waves-light btn blue disabled">Szczegóły</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row-container field-container col s5">
+                <h6>Data złożenia odwołania: </h6>
+                <p>{{ appeal.created_at }}</p>
+            </div>
+        </div>
+        <div class="row last">
+            <form id="dean_response_form">
+                <div class="row-container large-data-container col s12">
+                    <h6>Podaj dodatkowe informacje o decyzji: </h6>
+                    <div class="large-text-field grey lighten-2 input-field">
+                        <textarea placeholder="Wprowadź dodatkowe informacje..." id="dean_response" class="materialize-textarea">{{ appeal.dean_response }}</textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="action-button-container row">
+        <div class="col s6 center">
+            <a class="waves-effect waves-light btn blue" href="/appeal_responses/"><i class="material-icons right">block</i>Anuluj</a>
+        </div>
+        <div class="col s6 center">
+            <button href="/appeal_responses/" class="waves-effect waves-light btn red" id="decline"><i class="material-icons right">close</i>Odrzuć</button>
+            <button href="/appeal_responses/" class="waves-effect waves-light btn green" id="accept"><i class="material-icons right">check</i>Zatwierdź</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

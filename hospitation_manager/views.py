@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.contrib import messages
 from .models import ProtocolAppeal, AcademicTeacher
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
+import json
 
 def index(request):
     return render(request, 'hospitation_manager/index.html')
@@ -18,10 +20,31 @@ def appeal_responses_index(request):
 def appeal_responses_details(request, id):
     template = 'hospitation_manager/appeal_responses/details.html'
     context = {
-        'appeal': ProtocolAppeal.objects.filter(id=id)[0]
+        'appeal': ProtocolAppeal.objects.get(pk=id)
     }
 
     return render(request, template, context)
+
+def appeal_responses_edit(request, id):
+    if request.method == 'GET':
+        template = 'hospitation_manager/appeal_responses/edit.html'
+        context = {
+            'appeal': ProtocolAppeal.objects.get(pk=id)
+        }
+
+        return render(request, template, context)
+    if request.method == 'PUT':
+        data = json.load(request)
+        if data.get('status') == 'accept':
+            ProtocolAppeal.objects.filter(pk=id).update(status='ZA', dean_response=data.get('dean_response'))
+            messages.success(request, 'Pomyślnie zaakceptowano odwołanie')
+            return HttpResponse('Updated succesfully')
+        if data.get('status') == 'decline':
+            ProtocolAppeal.objects.filter(pk=id).update(status='OD', dean_response=data.get('dean_response'))
+            messages.error(request, 'Pomyślnie odrzucono odwołanie')
+            return HttpResponse('Updated succesfully')
+        return HttpResponseBadRequest('Invalid request')
+    return HttpResponseBadRequest('Invalid request')
 
 
 @csrf_exempt 
