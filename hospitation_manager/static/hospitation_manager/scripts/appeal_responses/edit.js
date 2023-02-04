@@ -25,15 +25,15 @@ async function sendUpdateRequest(status) {
     const dean_response = document.querySelector('#dean_response').value;
     const data = {
         status,
-        mode: 'cors',
         dean_response
     }
 
     return await fetch(UPDATE_URI + id, {
         method: 'PUT',
+        mode: 'same-origin',
         headers: {
             "X-Requested-With": "XMLHttpRequest",
-            'X-CSRFToken': csrftoken
+            "X-CSRFToken": csrftoken
         },
         body: JSON.stringify(data)
     })

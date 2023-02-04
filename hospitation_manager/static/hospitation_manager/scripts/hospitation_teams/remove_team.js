@@ -10,10 +10,10 @@ function removeTeam(id) {
 async function removeRequest(id) {
     return await fetch('/hospitation_teams/delete/' + id, {
         method: 'DELETE',
-        mode: 'cors',
+        mode: 'same-origin',
         headers: {
             "X-Requested-With": "XMLHttpRequest",
-            'X-CSRFToken': csrftoken
+            "X-CSRFToken": csrftoken
         }
     })
 }
