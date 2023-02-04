@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib import messages
 from .models import ProtocolAppeal, AcademicTeacher, Hospitation, HospitationProtocol, ProtocolAppeal, HospitationTeam, Classes
 from django.views.decorators.csrf import csrf_exempt
@@ -26,6 +27,7 @@ def appeal_responses_details(request, id):
 
     return render(request, template, context)
 
+@ensure_csrf_cookie
 def appeal_responses_edit(request, id):
     if request.method == 'GET':
         template = 'hospitation_manager/appeal_responses/edit.html'
@@ -47,6 +49,7 @@ def appeal_responses_edit(request, id):
         return HttpResponseBadRequest('Invalid request')
     return HttpResponseBadRequest('Invalid request')
 
+@ensure_csrf_cookie
 def hospitation_teams_index(request):
     template = 'hospitation_manager/hospitation_teams/index.html'
     context = {
@@ -64,6 +67,7 @@ def hospitation_teams_details(request, id):
 
     return render(request, template, context)
 
+@ensure_csrf_cookie
 def hospitation_teams_edit(request, id):
     template = 'hospitation_manager/hospitation_teams/edit.html'
     hospitations = Hospitation.objects.filter(hospitation_team__number=id)
@@ -79,6 +83,7 @@ def hospitation_teams_edit(request, id):
 def hospitation_teams_delete(request, id):
     if request.method == 'DELETE':
         HospitationTeam.objects.get(pk=id).delete()
+        messages.success(request, 'Pomyślnie usunięto')
         return HttpResponse('Deleted succesfully')
     return HttpResponseBadRequest('Bad request')
 
